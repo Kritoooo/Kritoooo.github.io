@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Krito's Blog | Krito's Blog</title><meta name="author" content="Krito"><meta name="copyright" content="Krito"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Linux基础入门（三）GCCGCC是Linux下的编译工具集，是GNU Compiler Collection的缩写，包含gcc、g++等编译器，这个工具集不仅包含编译器，还包含其他工具集，例如ar、nm等。 安装GCC12345678910111213ubuntusudo apt updatesudo apt install gcc g++centossudo yum updatesudo y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Krito&#39;s Blog">
+<meta property="og:url" content="https://krito2023.com/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E4%B8%89/index.html">
+<meta property="og:site_name" content="Krito&#39;s Blog">
+<meta property="og:description" content="Linux基础入门（三）GCCGCC是Linux下的编译工具集，是GNU Compiler Collection的缩写，包含gcc、g++等编译器，这个工具集不仅包含编译器，还包含其他工具集，例如ar、nm等。 安装GCC12345678910111213ubuntusudo apt updatesudo apt install gcc g++centossudo yum updatesudo y">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://krito2023.com/img/avatar.jpg">
+<meta property="article:published_time" content="2024-03-15T05:27:06.512Z">
+<meta property="article:modified_time" content="2024-03-15T05:31:39.885Z">
+<meta property="article:author" content="Krito">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://krito2023.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://krito2023.com/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E4%B8%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Krito\'s Blog',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-15 13:31:39'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Krito's Blog"><span class="site-name">Krito's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-15T05:27:06.512Z" title="发表于 2024-03-15 13:27:06">2024-03-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-15T05:31:39.885Z" title="更新于 2024-03-15 13:31:39">2024-03-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Linux基础入门（三）"><a href="#Linux基础入门（三）" class="headerlink" title="Linux基础入门（三）"></a>Linux基础入门（三）</h1><h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p>GCC是Linux下的编译工具集，是GNU Compiler Collection的缩写，包含gcc、g++等编译器，这个工具集不仅包含编译器，还包含其他工具集，例如ar、nm等。</p>
+<h3 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ubuntu</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install gcc g++</span><br><span class="line"></span><br><span class="line">centos</span><br><span class="line">sudo yum update</span><br><span class="line">sudo yum install gcc g ++</span><br><span class="line"></span><br><span class="line">查看gcc版本</span><br><span class="line">gcc -v</span><br><span class="line"></span><br><span class="line">查看g++版本</span><br><span class="line">g++ -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="/pic/image-20240307124527126.png" alt="image-20240307124527126"></p>
+<h3 id="gcc工作流程"><a href="#gcc工作流程" class="headerlink" title="gcc工作流程"></a>gcc工作流程</h3><p>GCC编译器对程序的编译分为四个阶段：预处理（预编译）、编译和优化、汇编和链接。GCC编译器可以将这四个步骤合并成一个。</p>
+<p>1.预处理：GCC调用预处理器来完成；展开头文件、宏替换、去掉注释行。</p>
+<p>2.编译：GCC调用编译器对文件进行编译，最终得到一个汇编文件。</p>
+<p>3.汇编：GCC调用汇编器对文件进行汇编，最终得到一个二进制文件。</p>
+<p>4.链接：GCC调用链接器对程序需要调用的库进行链接，最终得到一个可执行的二进制文件。</p>
+<table>
+<thead>
+<tr>
+<th>文件名后缀</th>
+<th>说明</th>
+<th>gcc参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.c</td>
+<td>源文件</td>
+<td>无</td>
+</tr>
+<tr>
+<td>.i</td>
+<td>预处理后的C文件</td>
+<td>-E</td>
+</tr>
+<tr>
+<td>.s</td>
+<td>编译之后得到的汇编语言的源文件</td>
+<td>-S</td>
+</tr>
+<tr>
+<td>.o</td>
+<td>汇编后得到的二进制文件</td>
+<td>-c</td>
+</tr>
+</tbody></table>
+<p><img src="/pic/image-20240307125904722.png" alt="image-20240307125904722"></p>
+<p>test.c</p>
+<p><img src="/pic/image-20240307130209517.png" alt="image-20240307130209517"></p>
+<p>test.i</p>
+<p><img src="/pic/image-20240307130150335.png" alt="image-20240307130150335"></p>
+<p>test.s</p>
+<p><img src="/pic/image-20240307130412927.png" alt="image-20240307130412927"></p>
+<p>test.o</p>
+<p><img src="/pic/image-20240307130516326.png" alt="image-20240307130516326"></p>
+<p>最后运行</p>
+<p><img src="/pic/image-20240307130552101.png" alt="image-20240307130552101"></p>
+<p>我们也可以直接gcc test.c -o test。</p>
+<h3 id="gcc常用参数"><a href="#gcc常用参数" class="headerlink" title="gcc常用参数"></a>gcc常用参数</h3><h4 id="指定生成的文件名-o"><a href="#指定生成的文件名-o" class="headerlink" title="指定生成的文件名(-o)"></a>指定生成的文件名(-o)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test.c -o 生成文件名</span><br></pre></td></tr></table></figure>
+
+<h4 id="搜索头文件-l"><a href="#搜索头文件-l" class="headerlink" title="搜索头文件(-l)"></a>搜索头文件(-l)</h4><p>指定要引用的头文件路径。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc *.c -I include</span><br></pre></td></tr></table></figure>
+
+<h4 id="指定一个宏-D"><a href="#指定一个宏-D" class="headerlink" title="指定一个宏(-D)"></a>指定一个宏(-D)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc 源文件 -D 宏定义</span><br></pre></td></tr></table></figure>
+
+<p><img src="/pic/image-20240307161527012.png" alt="image-20240307161527012"></p>
+<p>gcc test.c</p>
+<p><img src="/pic/image-20240307161611531.png" alt="image-20240307161611531"></p>
+<p><img src="/pic/image-20240307161715163.png" alt="image-20240307161715163"></p>
+<h3 id="gcc和g"><a href="#gcc和g" class="headerlink" title="gcc和g++"></a>gcc和g++</h3><p>gcc无法自动链接到c++标准库，需要指定参数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.cpp -l stdc++</span><br></pre></td></tr></table></figure>
+
+<h2 id="静态库和动态库"><a href="#静态库和动态库" class="headerlink" title="静态库和动态库"></a>静态库和动态库</h2><h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><p>在Linux中静态库由程序ar生成。</p>
+<ul>
+<li>在Linux中静态库以lib作为前缀，以.a作为后缀，中间是库的名字，即：libxxx.a</li>
+<li>在Windows中静态库一般以lib作为前缀，以lib作为后缀，中间是库的名字，即：libxxx.lib</li>
+</ul>
+<h4 id="生成静态库"><a href="#生成静态库" class="headerlink" title="生成静态库"></a>生成静态库</h4><p>生成静态库，需要先对源文件进行汇编操作得到二进制格式的目标文件，然后再通过ar工具将目标文件打包就可以得到静态库文件了。</p>
+<ul>
+<li>参数c：创建一个库。</li>
+<li>参数s：创建目标文件索引，在创建较大的库时能加快时间。</li>
+<li>参数r：在库中插入模块（替换）。</li>
+</ul>
+<p>生成静态链接库的具体步骤如下：</p>
+<p>1.需要将源文件进行汇编，得到.o文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 执行如下操作，默认生成二进制的.o文件</span></span><br><span class="line">gcc 源文件(*.c) -c </span><br></pre></td></tr></table></figure>
+
+<p> 2.将得到的.o进行打包，得到静态库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ar rcs 静态库的名字 原材料(*.o)</span><br></pre></td></tr></table></figure>
+
+<p>sub.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;head.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">subtract</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span><br><span class="line">&#123;</span><br><span class="line">        <span class="keyword">return</span> a-b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>head.h</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _HEAD_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _HEAD_H</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">subtract</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">multiply</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>;</span><br><span class="line"><span class="type">double</span> <span class="title function_">divide</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>main.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;head.h&quot;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">        <span class="type">int</span> a = <span class="number">20</span>;</span><br><span class="line">        <span class="type">int</span> b = <span class="number">12</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;a = %d, b = %d\n&quot;</span>, a, b);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;a + b = %d\n&quot;</span>, add(a, b));</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;a - b = %d\n&quot;</span>, subtract(a, b));</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;a * b = %d\n&quot;</span>, multiply(a, b));</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;a / b = %f\n&quot;</span>, divide(a, b));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/pic/image-20240309150724507.png" alt="image-20240309150724507"></p>
+<p><img src="/pic/image-20240309151809802.png" alt="image-20240309151809802"></p>
+<p><img src="/pic/image-20240309151904844.png" alt="image-20240309151904844"></p>
+<p><img src="/pic/image-20240309152344807.png" alt="image-20240309152344807"></p>
+<h3 id="动态库"><a href="#动态库" class="headerlink" title="动态库"></a>动态库</h3><p>动态链接库是程序运行时加载的库，当动态链接库正确部署之后，运行的多个程序可以使用同一个加载到内存中的动态库，因此在Linux中动态链接库也可以称之为共享库。</p>
+<ul>
+<li>在Linux中动态库以lib作为前缀，以.so作为后缀，中间是库的名字，例如：libxxx.so</li>
+<li>在Windows中动态库一般以lib作为前缀，以dll作为后缀，中间是库的名字，例如：libxxx.dll</li>
+</ul>
+<p>	 </p>
+<h4 id="生成动态库"><a href="#生成动态库" class="headerlink" title="生成动态库"></a>生成动态库</h4><p>直接使用gcc命令并且需要添加-fPIC（-fpic）以及-shared参数。</p>
+<ul>
+<li>-fPIC或-fpic参数的作用是使得gcc生成的代码是与位置无关的，也就是使用相对位置。</li>
+<li>-shared参数是告诉编译器生成一个动态链接库</li>
+</ul>
+<p>生成动态链接库的具体步骤如下：</p>
+<p>1.将源文件进行汇编操作、需要使用参数-c，还需要添加额外此参数 -fpic&#x2F;-fPIC</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">得到若干个 .o文件</span><br><span class="line">gcc 源文件(*.c) -c -fpic</span><br></pre></td></tr></table></figure>
+
+<p>2.将得到的.o文件打包成动态库，还是使用gcc，使用参数 -shared 指定生成动态库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared 与位置无关的目标文件(*.o) -o 动态库(libxxx.so)</span><br></pre></td></tr></table></figure>
+
+<p>3.发布动态库和头文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.提供头文件：xxx.h</span><br><span class="line">2.提供动态库：libxxx.so</span><br></pre></td></tr></table></figure>
+
+<p><img src="/pic/image-20240309152830627.png" alt="image-20240309152830627"></p>
+<p><img src="/pic/image-20240309152810286.png" alt="image-20240309152810286"></p>
+<p><img src="/pic/image-20240309153126857.png" alt="image-20240309153126857"></p>
+<p><img src="/pic/image-20240309153111078.png" alt="image-20240309153111078"></p>
+<h4 id="解决动态库无法加载问题"><a href="#解决动态库无法加载问题" class="headerlink" title="解决动态库无法加载问题"></a>解决动态库无法加载问题</h4><h5 id="库的工作原理"><a href="#库的工作原理" class="headerlink" title="库的工作原理"></a>库的工作原理</h5><ul>
+<li><p>静态库加载</p>
+<p>静态库会被打包到可执行程序中，当可执行程序被执行，静态库中的代码也会一并被加载到内存中，因此不会出现静态库找不到无法被加载的问题。</p>
+</li>
+<li><p>动态库加载</p>
+<p>gcc命令中虽然指定了库路径（-L），但是这个路径并没有记录到可执行程序中，只是检查了这个路径下的库文件是否存在。</p>
+<p>动态库文件没有被打包到可执行程序中，只是在可执行程序中记录了库的名字。</p>
+</li>
+</ul>
+<p>可执行程序被执行后，会先检测需要的动态库是否可以被加载，加载不到就会提示错误信息。</p>
+<p>当动态库中的函数在程序中被调用了，这时候动态库才加载到内存，如果不被调用就不加载。</p>
+<p>动态库的检测和内存加载操作都是由动态连接器来完成的。</p>
+<h5 id="动态链接器"><a href="#动态链接器" class="headerlink" title="动态链接器"></a>动态链接器</h5><p>动态链接器是一个独立的进程，当用户的程序需要加载动态库时，动态链接器开始工作。</p>
+<p>动态链接器的搜索顺序：</p>
+<p>1.可执行文件内部的DT_RPATH段</p>
+<p>2.系统的环境变量LD_LIBRARY_PATH</p>
+<p>3.系统动态库的缓存文件&#x2F;etc&#x2F;ld.so.cache</p>
+<p>4.存储动态库 &#x2F; 静态库的系统目录 &#x2F;lib&#x2F;，&#x2F;usr&#x2F;lib等</p>
+<p>如果按照上面四个顺序搜索，最后还是没找到，动态链接器就会提示错误信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldd 可执行文件 <span class="comment">#检查可执行文件所需的动态库能否被正确加载</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><p>方案1：将库路径添加到环境变量LD_LIBRARY_PATH中</p>
+<p>1.找到配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/.bashrc 对当前用户有效</span><br><span class="line">/etc/profile 对所有用户有效</span><br></pre></td></tr></table></figure>
+
+<p>2.使用vim打开配置文件，在文件最后添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:动态库的绝对路径</span><br></pre></td></tr></table></figure>
+
+<p>3.配置文件生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc          (. ~/.bashrc)</span><br><span class="line"><span class="built_in">source</span> /etc/profile       (. /etc/profile)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/pic/image-20240309154359422.png" alt="image-20240309154359422"></p>
+<p><img src="/pic/image-20240309154412551.png" alt="image-20240309154412551"></p>
+<p>方案2: 更新 &#x2F;etc&#x2F;ld.so.cache 文件</p>
+<ol>
+<li><p>找到动态库所在的绝对路径 比如：<code>/home/krito/Library/</code></p>
+</li>
+<li><p>修改 <code>/etc/ld.so.conf</code>，将路径添加到该文件末尾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ld.so.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>方案3: 拷贝动态库文件到系统库目录 <code>/lib/</code> 或者 <code>/usr/lib</code> 中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 库拷贝</span></span><br><span class="line">sudo <span class="built_in">cp</span> /xxx/xxx/libxxx.so /usr/lib</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建软连接</span></span><br><span class="line">sudo <span class="built_in">ln</span> -s /xxx/xxx/libxxx.so /usr/lib/libxxx.so</span><br></pre></td></tr></table></figure>
+
+<p><img src="/pic/image-20240309154814930.png" alt="image-20240309154814930"></p>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p>静态库优点：</p>
+<ul>
+<li>静态库被打包到应用程序中，加载速度更快</li>
+<li>发布程序无需提供静态库，移植方便</li>
+</ul>
+<p>静态库缺点：</p>
+<ul>
+<li>相同的库文件可能会在内存中加载多份，消耗系统资源，浪费内存。</li>
+<li>库文件更新需要重新编译项目文件，生成新的可执行程序，浪费时间。</li>
+</ul>
+<p>动态库优点：</p>
+<ul>
+<li>可实现不同进程间的资源共享</li>
+<li>动态库升级简单，只需要替换库文件，无需重新编译应用程序</li>
+<li>可控制何时加载</li>
+</ul>
+<p>动态库缺点：</p>
+<ul>
+<li>加载速度比静态库慢</li>
+<li>发布程序需要提供依赖的动态库</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://krito2023.com">Krito</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://krito2023.com/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E4%B8%89/">https://krito2023.com/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E4%B8%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://krito2023.com" target="_blank">Krito's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E5%9B%9B/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E4%BA%8C/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Krito</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Kritoooo"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Kritoooo" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2388274959@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://blog.csdn.net/qq_62959684" target="_blank" title="CSDN"><i class="fa fa-book-open"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Linux基础入门（三）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GCC"><span class="toc-number">1.1.</span> <span class="toc-text">GCC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85GCC"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装GCC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcc%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">gcc工作流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcc%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text">gcc常用参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D-o"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">指定生成的文件名(-o)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E5%A4%B4%E6%96%87%E4%BB%B6-l"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">搜索头文件(-l)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E4%B8%80%E4%B8%AA%E5%AE%8F-D"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">指定一个宏(-D)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcc%E5%92%8Cg"><span class="toc-number">1.1.4.</span> <span class="toc-text">gcc和g++</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%BA%93%E5%92%8C%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-number">1.2.</span> <span class="toc-text">静态库和动态库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%BA%93"><span class="toc-number">1.2.1.</span> <span class="toc-text">静态库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E5%BA%93"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">生成静态库</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">动态库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">生成动态库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%A8%E6%80%81%E5%BA%93%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">解决动态库无法加载问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BA%93%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.2.2.1.</span> <span class="toc-text">库的工作原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%99%A8"><span class="toc-number">1.2.2.2.2.</span> <span class="toc-text">动态链接器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.2.2.2.3.</span> <span class="toc-text">解决方案</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83"><span class="toc-number">1.2.3.</span> <span class="toc-text">比较</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/15/%E7%BE%A4%E6%99%96%E5%AE%89%E8%A3%85%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="无题">无题</a><time datetime="2024-03-15T05:27:06.532Z" title="发表于 2024-03-15 13:27:06">2024-03-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E4%B8%80/" title="无题">无题</a><time datetime="2024-03-15T05:27:06.524Z" title="发表于 2024-03-15 13:27:06">2024-03-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E5%9B%9B/" title="无题">无题</a><time datetime="2024-03-15T05:27:06.520Z" title="发表于 2024-03-15 13:27:06">2024-03-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E4%B8%89/" title="无题">无题</a><time datetime="2024-03-15T05:27:06.512Z" title="发表于 2024-03-15 13:27:06">2024-03-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/15/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E4%BA%8C/" title="无题">无题</a><time datetime="2024-03-15T05:27:06.508Z" title="发表于 2024-03-15 13:27:06">2024-03-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Krito</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: '2b6ba155c145ce2973a6',
+      clientSecret: '4f212cfe145efeea06377f5a9c0a3401d480c392',
+      repo: 'Kritoooo.github.io',
+      owner: 'Kritoooo',
+      admin: ['Kritoooo'],
+      id: 'eb521a4bfd13db1d10a4aea680b89390',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div></body></html>
