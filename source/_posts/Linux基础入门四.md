@@ -1,6 +1,7 @@
 ---
 title: Linux基础入门（四）
-tags: Linux
+tags:
+- Linux
 
 
 ---
